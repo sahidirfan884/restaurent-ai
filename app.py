@@ -18,7 +18,8 @@ while True:
 
     cv2.imshow("Restaurant AI - Person Detection", annotated_frame)
 
-    if cv2.waitKey(1) & 0xFF == ord("q"):
+    key=cv2.waitKey(30) & 0xFF
+    if key==ord('q') or key ==27:
         break
 
 cap.release()
