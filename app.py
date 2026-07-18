@@ -15,7 +15,7 @@ while True:
         break
     results=model.track(frame,persist=True, classes=[0])
     for result in results:
-    boxes = result.boxes
+        boxes = result.boxes
 
     if boxes.id is None:
         continue
