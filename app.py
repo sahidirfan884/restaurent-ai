@@ -5,7 +5,7 @@ from ultralytics import YOLO
 model = YOLO("yolov8n.pt")
 
 # Open webcam (use 0) or replace with your video path
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0,cv2.CAP_MSMF)
 
 while True:
     ret, frame = cap.read()
