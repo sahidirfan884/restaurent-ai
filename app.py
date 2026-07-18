@@ -5,7 +5,7 @@ from ultralytics import YOLO
 model = YOLO("yolov8n.pt")
 
 # Open webcam (use 0) or replace with your video path
-cap = cv2.VideoCapture("C:\Users\thanh\Downloads\stock-footage-turkey-belek-november-the-first-perspective-the-point-of-view-of-the-cctv-camera-in-the (2).webm")
+cap = cv2.VideoCapture("videos/restaurent_video(1)")
 
 while True:
     ret, frame = cap.read()
