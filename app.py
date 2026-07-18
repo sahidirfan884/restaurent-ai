@@ -5,7 +5,7 @@ from ultralytics import YOLO
 model = YOLO("yolov8n.pt")
 
 # Open webcam (use 0) or replace with your video path
-cap = cv2.VideoCapture("videos/restaurent_video(1)")
+cap = cv2.VideoCapture(r"C:\Users\thanh\OneDrive\Documents\GitHub\restaurent-ai\videos\restaurent_video(1).webm")
 
 while True:
     ret, frame = cap.read()
