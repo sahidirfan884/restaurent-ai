@@ -12,7 +12,7 @@ while True:
     if not ret:
         break
 
-    results = model.track(frame,persist=True)
+    results = model.track(frame,persist=True, classes=[0])
 
     annotated_frame = results[0].plot()
 
