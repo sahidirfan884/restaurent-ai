@@ -44,7 +44,7 @@ while True:
 
     annotated_frame = results[0].plot()
 
-    cv2.imshow("Restaurant AI - Person Detection", annotated_frame)
+    cv2.imshow("Restaurant AI - Person Detection", frame)
 
     key=cv2.waitKey(30) & 0xFF
     if key==ord('q') or key ==27:
