@@ -7,8 +7,8 @@ model = YOLO("yolov8n.pt")
 
 # Define table zones (change these coordinates to match your video)
 table_zones = {
-    "Table 1": (120, 70, 360, 310),
-    "Table 2": (430, 90, 640, 320),
+    "Table 1": (120, 140, 360, 420),
+    "Table 2": (430, 150, 620, 410),
 }
 
 # Open video
@@ -17,11 +17,6 @@ cap = cv2.VideoCapture(
 )
 
 customer_times = {}
-def mouse(event, x, y, flags, param):
-    if event == cv2.EVENT_LBUTTONDOWN:
-        print(f"Clicked at: ({x}, {y}")
-cv2.namedWindow("Restaurent AI - Person Detection")
-cv2.setMouseCallback("Restaurent AI - Person Detection", mouse)
 while True:
     ret, frame = cap.read()
     if not ret:
