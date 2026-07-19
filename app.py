@@ -3,10 +3,14 @@ import cv2
 from ultralytics import YOLO
 
 # Load YOLOv8 model
+table_zones={
+    "Table 1": (50,100,250,300),
+    "Table 2": (50,100,250,300),
+}
 model = YOLO("yolov8n.pt")
 
 # Open webcam (use 0) or replace with your video path
-cap = cv2.VideoCapture(r"C:\Users\thanh\OneDrive\Documents\GitHub\restaurent-ai\videos\restaurent_video(1).webm")
+cap = cv2.VideoCapture(r"C:\Users\thanh\OneDrive\Documents\GitHub\restaurent-ai\videos\restaurent_video(2).webm")
 
 customer_times={}
 while True:
@@ -21,17 +25,23 @@ while True:
         continue
 
     ids = boxes.id.int().cpu().tolist()
+    for table, (x1, y1, x2, y2) in table_zones.items():
+    cv2.rectangle(frame, (x1, y1), (x2, y2), (255,0,0), 2)
+    cv2.putText(frame, table, (x1, y1-10),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.7, (255,0,0), 2)
 
     for box, person_id in zip(boxes, ids):
         x1, y1, x2, y2 = map(int, box.xyxy[0])
 
         if person_id not in customer_times:
             customer_times[person_id] = time.time()
-
-        wait_time = int(time.time() - customer_times[person_id])
-
+        elapsed = int(time.time() - customer_times[person_id])
+        
         cv2.rectangle(frame, (x1, y1), (x2, y2), (0,255,0), 2)
-
+        
+        wait_time= int(time.time() - customer_times[person_id])
+        
         cv2.putText(
             frame,
             f"ID:{person_id} Wait:{wait_time}s",
@@ -44,7 +54,7 @@ while True:
 
     annotated_frame = results[0].plot()
 
-    cv2.imshow("Restaurant AI - Person Detection", frame)
+    cv2.imshow("Restaurant AI - Person Detection", annotated_frame)
 
     key=cv2.waitKey(30) & 0xFF
     if key==ord('q') or key ==27:
