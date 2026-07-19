@@ -21,30 +21,30 @@ while True:
     for result in results:
         boxes = result.boxes
 
-    if boxes.id is None:
-        continue
+        if boxes.id is None:
+            continue
 
-    ids = boxes.id.int().cpu().tolist()
-    for table, (x1, y1, x2, y2) in table_zones.items():
-        cv2.rectangle(frame, (x1, y1), (x2, y2), (255,0,0), 2)
-        count = 0
+        ids = boxes.id.int().cpu().tolist()
+        for table, (x1, y1, x2, y2) in table_zones.items():
+            cv2.rectangle(frame, (x1, y1), (x2, y2), (255,0,0), 2)
+            count = 0
 
-for box in results[0].boxes:
-    if int(box.cls[0]) == 0:  # Person
-        x1, y1, x2, y2 = map(int, box.xyxy[0])
-        cx = (x1 + x2) // 2
-        cy = (y1 + y2) // 2
+            for box in results[0].boxes:
+                if int(box.cls[0]) == 0:  # Person
+                    x1, y1, x2, y2 = map(int, box.xyxy[0])
+                    cx = (x1 + x2) // 2
+                    cy = (y1 + y2) // 2
 
-        if tx1 < cx < tx2 and ty1 < cy < ty2:
-            count += 1
+                    if tx1 < cx < tx2 and ty1 < cy < ty2:
+                        count += 1
 
-cv2.putText(frame, f"Table: {count} People",
-            (tx1, ty1 - 10),
-            cv2.FONT_HERSHEY_SIMPLEX,
-            0.8,
-            (0, 255, 0),
-            2
-           )
+            cv2.putText(frame, f"Table: {count} People",
+                          (tx1, ty1 - 10),
+                         cv2.FONT_HERSHEY_SIMPLEX,
+                           0.8,
+                         (0, 255, 0),
+                          2
+                          )
 
     for box, person_id in zip(boxes, ids):
         x1, y1, x2, y2 = map(int, box.xyxy[0])
