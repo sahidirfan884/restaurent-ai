@@ -7,8 +7,8 @@ model = YOLO("yolov8n.pt")
 
 # Define table zones (change these coordinates to match your video)
 table_zones = {
-    "Table 1": (40, 180, 330, 520),
-    "Table 2": (430, 180, 640, 520),
+    "Table 1": (120, 70, 360, 310),
+    "Table 2": (430, 90, 640, 320),
 }
 
 # Open video
