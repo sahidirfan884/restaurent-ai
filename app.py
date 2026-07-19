@@ -17,7 +17,11 @@ cap = cv2.VideoCapture(
 )
 
 customer_times = {}
-
+def mouse(event, x, y, flags, param):
+    if event == cv2.EVENT_MOUSEMOVE:
+        print(f"X={x}, Y={y}")
+cv2.namedWindow("Restaurent AI - Person Detection")
+cv2.setMouseCallback("Restaurent AI - Person Detection", mouse)
 while True:
     ret, frame = cap.read()
     if not ret:
