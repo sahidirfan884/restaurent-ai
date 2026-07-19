@@ -43,7 +43,8 @@ cv2.putText(frame, f"Table: {count} People",
             cv2.FONT_HERSHEY_SIMPLEX,
             0.8,
             (0, 255, 0),
-            2))
+            2
+           )
 
     for box, person_id in zip(boxes, ids):
         x1, y1, x2, y2 = map(int, box.xyxy[0])
