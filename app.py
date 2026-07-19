@@ -25,15 +25,15 @@ while True:
             continue
 
         ids = boxes.id.int().cpu().tolist()
-        for table, (x1, y1, x2, y2) in table_zones.items():
+        for table, (tx1, ty1, tx2, ty2) in table_zones.items():
             cv2.rectangle(frame, (x1, y1), (x2, y2), (255,0,0), 2)
             count = 0
 
             for box in results[0].boxes:
                 if int(box.cls[0]) == 0:  # Person
-                    x1, y1, x2, y2 = map(int, box.xyxy[0])
-                    cx = (x1 + x2) // 2
-                    cy = (y1 + y2) // 2
+                    px1, py1, px2, py2 = map(int, box.xyxy[0])
+                    cx = (px1 + px2) // 2
+                    cy = (py1 + py2) // 2
 
                     if tx1 < cx < tx2 and ty1 < cy < ty2:
                         count += 1
@@ -67,9 +67,8 @@ while True:
             2
         )
 
-    annotated_frame = results[0].plot()
 
-    cv2.imshow("Restaurant AI - Person Detection", annotated_frame)
+    cv2.imshow("Restaurant AI - Person Detection", frame)
 
     key=cv2.waitKey(30) & 0xFF
     if key==ord('q') or key ==27:
