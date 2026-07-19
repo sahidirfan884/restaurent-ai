@@ -7,8 +7,8 @@ model = YOLO("yolov8n.pt")
 
 # Define table zones (change these coordinates to match your video)
 table_zones = {
-    "Table 1": (50, 100, 250, 300),
-    "Table 2": (50, 100, 250, 300),
+    "Table 1": (40, 180, 330, 520),
+    "Table 2": (430, 180, 640, 520),
 }
 
 # Open video
@@ -57,7 +57,7 @@ while True:
                 cv2.FONT_HERSHEY_SIMPLEX,
                 0.8,
                 (0, 255, 0),
-                2,
+                2
             )
 
         # Draw person boxes and waiting time
