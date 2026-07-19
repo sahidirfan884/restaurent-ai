@@ -26,10 +26,10 @@ while True:
 
     ids = boxes.id.int().cpu().tolist()
     for table, (x1, y1, x2, y2) in table_zones.items():
-    cv2.rectangle(frame, (x1, y1), (x2, y2), (255,0,0), 2)
-    cv2.putText(frame, table, (x1, y1-10),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                0.7, (255,0,0), 2)
+        cv2.rectangle(frame, (x1, y1), (x2, y2), (255,0,0), 2)
+        cv2.putText(frame, table, (x1, y1-10),
+    cv2.FONT_HERSHEY_SIMPLEX,
+                     0.7, (255,0,0), 2)
 
     for box, person_id in zip(boxes, ids):
         x1, y1, x2, y2 = map(int, box.xyxy[0])
