@@ -17,6 +17,11 @@ cap = cv2.VideoCapture(
 )
 
 customer_times = {}
+
+def inside_table(x, y, table):
+    x1,y1,x2,y2=table
+    return x1 <= x <=x2 and y1 <= y <= y2
+    
 while True:
     ret, frame = cap.read()
     if not ret:
@@ -61,6 +66,20 @@ while True:
 
         # Draw person boxes and waiting time
         for box, person_id in zip(boxes, ids):
+            center_x = (x1 + x2) //2
+            center_y = (y1 + y2) //2
+
+            for table_name, zone in table_zones.items():
+                if inside_table(center_x, center_y, zone):
+                    cv2.putText(
+                        frame,
+                        f"{table_name}",
+                        (x1, y2 + 20),
+                        cv2.FONT_HERSHEY_SIMPLEX,
+                        0.6,
+                        (255,255,0),
+                        2
+                    )
 
             x1, y1, x2, y2 = map(int, box.xyxy[0])
 
