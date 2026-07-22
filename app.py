@@ -17,6 +17,7 @@ cap = cv2.VideoCapture(
 )
 
 customer_times = {}
+MAX_WAIT=30 #seconds
 
 def inside_table(x, y, table):
     x1,y1,x2,y2=table
@@ -63,6 +64,21 @@ while True:
                 (0, 255, 0),
                 2
             )
+            if count==0:
+                status="FREE"
+                color=(0,255,0)
+            else:
+                status="OCCUPIED"
+                color=(0,0,255)
+            cv2.putText(
+                frame,
+                status,
+                (tx1,ty2+25),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.7,
+                color,
+                2
+            )
 
         # Draw person boxes and waiting time
         for box, person_id in zip(boxes, ids):
@@ -90,6 +106,16 @@ while True:
                 customer_times[person_id] = time.time()
 
             wait_time = int(time.time() - customer_times[person_id])
+            if wait_time>MAX_WAIT:
+                CV2.putText(
+                    frame,
+                    "SERVICE REQUIRED!",
+                    (x1,y2+20),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    0.7,
+                   (0, 0, 255),
+                    2
+                )
 
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
 
