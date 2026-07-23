@@ -104,10 +104,6 @@ while True:
             center_x = (x1 + x2) // 2
             center_y = (y1 + y2) // 2
             
-            box_height = y2 - y1
-            box_width = x2 - x1
-            sitting = box_height < (box_width * 1.3)
-            
             table_found = None
 
             for table_name, zone in table_zones.items():
@@ -124,26 +120,7 @@ while True:
                      }
 
                 wait_time = int(time.time() - seated_customers[person_id]["start_time"])
-
-                cv2.putText(
-                    frame,
-                    f"{table_found} | {wait_time}s",
-                    (x1, y1 - 10),
-                    cv2.FONT_HERSHEY_SIMPLEX,
-                    0.6,
-                    (0,255,0),
-                    2
-                    )
-
-                cv2.rectangle(frame, (x1, y1), (x2, y2), (0,255,0), 2)
-
-            
-
-            if person_id not in customer_times:
-                customer_times[person_id] = time.time()
-
-            wait_time = int(time.time() - customer_times[person_id])
-            if wait_time < 120:
+                if wait_time < 120:
                 status = "NORMAL"
                 color = (0, 255, 0)
 
@@ -154,28 +131,22 @@ while True:
             else:
                 status = "DELAYED"
                 color = (0, 0, 255)
-
+                
+            cv2.rectangle(frame, (x1, y1), (x2, y2), (0,255,0), 2)
             cv2.putText(
                 frame,
-                status,
-                (x1, y2 + 20),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                0.7,
-                color,
-                2
-             )   
-            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
-
-            cv2.putText(
-                frame,
-                f"ID:{person_id} Wait:{wait_time}s",
+                f"{table_found} | {wait_time}s",
                 (x1, y1 - 10),
                 cv2.FONT_HERSHEY_SIMPLEX,
                 0.6,
-                (0, 255, 0),
-                2,
-            )
+                (0,255,0),
+                2
+                )
 
+                
+
+
+        
     cv2.imshow("Restaurant AI - Person Detection", frame)
 
     key = cv2.waitKey(30) & 0xFF
