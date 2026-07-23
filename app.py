@@ -32,7 +32,7 @@ while True:
 
     for result in results:
         boxes = result.boxes
-
+        keypoints = result.keypoints
         if boxes.id is None:
             continue
 
@@ -84,6 +84,22 @@ while True:
         for box, person_id in zip(boxes, ids):
 
             x1, y1, x2, y2 = map(int, box.xyxy[0])
+            kp = keypoints.xy[ids.index(person_id)]
+
+            left_hip = kp[11]
+            right_hip = kp[12]
+            left_knee = kp[13]
+            right_knee = kp[14]
+
+            sitting = False
+
+            if left_hip[1] > 0 and left_knee[1] > 0:
+                if abs(left_hip[1] - left_knee[1]) < 40:
+                    sitting = True
+
+            if right_hip[1] > 0 and right_knee[1] > 0:
+                if abs(right_hip[1] - right_knee[1]) < 40:
+                    sitting = True
             
             center_x = (x1 + x2) // 2
             center_y = (y1 + y2) // 2
@@ -95,7 +111,7 @@ while True:
                     table_found = table_name
                     break
 
-            if table_found:
+            if table_found and sitting:
 
                 if person_id not in seated_customers:
                     seated_customers[person_id] = {
