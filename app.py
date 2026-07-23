@@ -17,7 +17,7 @@ cap = cv2.VideoCapture(
 )
 
 customer_times = {}
-MAX_WAIT=30 #seconds
+
 
 def inside_table(x, y, table):
     x1,y1,x2,y2=table
@@ -106,17 +106,27 @@ while True:
                 customer_times[person_id] = time.time()
 
             wait_time = int(time.time() - customer_times[person_id])
-            if wait_time>MAX_WAIT:
-                cv2.putText(
-                    frame,
-                    "SERVICE REQUIRED!",
-                    (x1,y2+20),
-                    cv2.FONT_HERSHEY_SIMPLEX,
-                    0.7,
-                   (0, 0, 255),
-                    2
-                )
+            if wait_time < 120:
+                status = "🟢 Normal"
+                color = (0, 255, 0)
 
+            elif wait_time < 300:
+                status = "🟡 Attention"
+                color = (0, 255, 255)
+
+            else:
+                status = "🔴 Delayed"
+                color = (0, 0, 255)
+
+            cv2.putText(
+                frame,
+                status,
+                (x1, y2 + 20),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.7,
+                color,
+                2
+             )   
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
 
             cv2.putText(
