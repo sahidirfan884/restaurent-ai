@@ -17,7 +17,7 @@ cap = cv2.VideoCapture(
 )
 
 customer_times = {}
-seated_customer = {}
+seated_customers = {}
 
 def inside_table(x, y, table):
     x1,y1,x2,y2=table
