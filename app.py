@@ -107,7 +107,7 @@ while True:
 
             wait_time = int(time.time() - customer_times[person_id])
             if wait_time>MAX_WAIT:
-                CV2.putText(
+                cv2.putText(
                     frame,
                     "SERVICE REQUIRED!",
                     (x1,y2+20),
