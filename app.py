@@ -103,7 +103,11 @@ while True:
             
             center_x = (x1 + x2) // 2
             center_y = (y1 + y2) // 2
-
+            
+            box_height = y2 - y1
+            box_width = x2 - x1
+            sitting = box_height < (box_width * 1.3)
+            
             table_found = None
 
             for table_name, zone in table_zones.items():
