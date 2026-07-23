@@ -17,7 +17,7 @@ cap = cv2.VideoCapture(
 )
 
 customer_times = {}
-
+seated_customer = {}
 
 def inside_table(x, y, table):
     x1,y1,x2,y2=table
@@ -85,20 +85,37 @@ while True:
 
             x1, y1, x2, y2 = map(int, box.xyxy[0])
             
-            center_x = (x1 + x2) //2
-            center_y = (y1 + y2) //2
+            center_x = (x1 + x2) // 2
+            center_y = (y1 + y2) // 2
+
+            table_found = None
 
             for table_name, zone in table_zones.items():
                 if inside_table(center_x, center_y, zone):
+                    table_found = table_name
+                    break
+
+            if table_found:
+
+                if person_id not in seated_customers:
+                    seated_customers[person_id] = {
+                        "table": table_found,
+                        "start_time": time.time()
+                     }
+
+                    wait_time = int(time.time() - seated_customers[person_id]["start_time"])
+
                     cv2.putText(
                         frame,
-                        f"{table_name}",
-                        (x1, y2 + 20),
+                        f"{table_found} | {wait_time}s",
+                        (x1, y1 - 10),
                         cv2.FONT_HERSHEY_SIMPLEX,
                         0.6,
-                        (255,255,0),
+                        (0,255,0),
                         2
-                    )
+                        )
+
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0,255,0), 2)
 
             
 
@@ -107,15 +124,15 @@ while True:
 
             wait_time = int(time.time() - customer_times[person_id])
             if wait_time < 120:
-                status = "🟢 Normal"
+                status = "NORMAL"
                 color = (0, 255, 0)
 
             elif wait_time < 300:
-                status = "🟡 Attention"
+                status = "ATTENTION"
                 color = (0, 255, 255)
 
             else:
-                status = "🔴 Delayed"
+                status = "DELAYED"
                 color = (0, 0, 255)
 
             cv2.putText(
