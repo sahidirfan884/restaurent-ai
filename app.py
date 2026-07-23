@@ -3,7 +3,7 @@ import cv2
 from ultralytics import YOLO
 
 # Load YOLOv8 model
-model = YOLO("yolov8n-pose.pt")
+model = YOLO("yolov8m-pose.pt")
 
 # Define table zones (change these coordinates to match your video)
 table_zones = {
