@@ -119,19 +119,19 @@ while True:
                         "start_time": time.time()
                      }
 
-                    wait_time = int(time.time() - seated_customers[person_id]["start_time"])
+                wait_time = int(time.time() - seated_customers[person_id]["start_time"])
 
-                    cv2.putText(
-                        frame,
-                        f"{table_found} | {wait_time}s",
-                        (x1, y1 - 10),
-                        cv2.FONT_HERSHEY_SIMPLEX,
-                        0.6,
-                        (0,255,0),
-                        2
-                        )
+                cv2.putText(
+                    frame,
+                    f"{table_found} | {wait_time}s",
+                    (x1, y1 - 10),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    0.6,
+                    (0,255,0),
+                    2
+                    )
 
-                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0,255,0), 2)
+                cv2.rectangle(frame, (x1, y1), (x2, y2), (0,255,0), 2)
 
             
 
