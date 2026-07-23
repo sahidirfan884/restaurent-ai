@@ -121,16 +121,16 @@ while True:
 
                 wait_time = int(time.time() - seated_customers[person_id]["start_time"])
                 if wait_time < 120:
-                status = "NORMAL"
-                color = (0, 255, 0)
+                    status = "NORMAL"
+                    color = (0, 255, 0)
 
-            elif wait_time < 300:
-                status = "ATTENTION"
-                color = (0, 255, 255)
+                elif wait_time < 300:
+                    status = "ATTENTION"
+                    color = (0, 255, 255)
 
-            else:
-                status = "DELAYED"
-                color = (0, 0, 255)
+                else:
+                    status = "DELAYED"
+                    color = (0, 0, 255)
                 
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0,255,0), 2)
             cv2.putText(
